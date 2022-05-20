@@ -12,11 +12,11 @@ namespace DvD_Api.Controllers
     [ApiController]
     [Route("api/[Controller]")]
     [Authorize]
-    public class DvdTitleController : ControllerBase
+    public class DvdTitleController : ControllerBase // mcv ko libary  inheriate garay ko ho
     {
         private readonly ApplicationDbContext _db;
 
-        public DvdTitleController(ApplicationDbContext database)
+        public DvdTitleController(ApplicationDbContext database) // yo program .cs bata aako ho 
         {
             _db = database;
         }
@@ -26,7 +26,7 @@ namespace DvD_Api.Controllers
         public async Task<IActionResult> AddDvdTitle(AddTitleDto dvdTitle)
         {
 
-            using var transaction = _db.Database.BeginTransaction();
+            using var transaction = _db.Database.BeginTransaction(); // taal ko sabbai run huna ko lagi yo add garay ko ho.. kunai pani fail vaya vanay execuite hunxa
 
             try
             {
@@ -68,15 +68,15 @@ namespace DvD_Api.Controllers
 
                 var dvdImageList = new List<DvDimage>();
                 foreach (var image in dvdTitle.DvDImages)
-                {
+                { // converted base64 image to WebP
+                    
+                    SKBitmap imageBitmap = image.Image64.GetBitmap(); // base64 to bitMap
+                    SKPixmap pixMap = imageBitmap.PeekPixels(); 
 
-                    SKBitmap imageBitmap = image.Image64.GetBitmap();
-                    SKPixmap pixMap = imageBitmap.PeekPixels();
-
-                    var options = new SKWebpEncoderOptions(SKWebpEncoderCompression.Lossy, 50);
+                    var options = new SKWebpEncoderOptions(SKWebpEncoderCompression.Lossy, 50); // bitMap lie WebP ma compress garay ko 
                     SKData data = pixMap.Encode(options);
 
-                    var base64String = "data:image/webp;base64," + data.AsStream().ConvertToBase64();
+                    var base64String = "data:image/webp;base64," + data.AsStream().ConvertToBase64(); // feri base64 ma convert garay ko 
 
 
                     var mDvdImage = new DvDimage
@@ -118,7 +118,7 @@ namespace DvD_Api.Controllers
         }
 
         [HttpGet("forCopy")]
-        public IEnumerable<object> GetForCopy()
+        public IEnumerable<object> GetForCopy() // IEnumerable read only vayo vanay rakhxa
         {
             return _db.Dvdtitles.Select(d => new
             {
@@ -129,7 +129,7 @@ namespace DvD_Api.Controllers
 
 
         [HttpGet]
-        [AllowAnonymous]
+        [AllowAnonymous] // jo lay in user garna pouxa { public property ho }
         public List<Dvdtitle> GetAllDvd()
         {
             return _db.Dvdtitles

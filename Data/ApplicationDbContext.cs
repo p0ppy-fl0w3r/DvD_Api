@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using DvD_Api.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore; // Entity = ORM
 using Microsoft.AspNetCore.Identity;
 
 namespace DvD_Api.Data
 {
-    public partial class ApplicationDbContext : IdentityDbContext<RopeyUserDto>
+    public partial class ApplicationDbContext : IdentityDbContext<RopeyUserDto>  // Identity = authentication
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+            : base(options) // super lie call garay ko ->  base
         {
         }
 
@@ -28,7 +28,7 @@ namespace DvD_Api.Data
         public virtual DbSet<Producer> Producers { get; set; }
         public virtual DbSet<Studio> Studios { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder) // fluent API  ho
         {
             base.OnModelCreating(modelBuilder);
 
