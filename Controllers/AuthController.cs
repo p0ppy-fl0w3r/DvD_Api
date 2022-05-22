@@ -4,7 +4,6 @@ using DvD_Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -288,6 +287,7 @@ namespace DvD_Api.Controllers
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT: ValidAudiance"],
                     claims: authClaims,
+                     // Token expires in 12hrs if remember me is not selected, else expires in 12 days. 
                     expires: rememberMe ? DateTime.Now.AddDays(7) : DateTime.Now.AddHours(12),
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );

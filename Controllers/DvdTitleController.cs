@@ -26,6 +26,8 @@ namespace DvD_Api.Controllers
         public async Task<IActionResult> AddDvdTitle(AddTitleDto dvdTitle)
         {
 
+            // Make sure that all the (new)data in DvD title is added or none is added. 
+            // Remember: A - Atomicity of ACID
             using var transaction = _db.Database.BeginTransaction();
 
             try
@@ -76,9 +78,13 @@ namespace DvD_Api.Controllers
                     var options = new SKWebpEncoderOptions(SKWebpEncoderCompression.Lossy, 50);
                     SKData data = pixMap.Encode(options);
 
+                    // Apparently base64 will consume 30% more space than byte array. 
+                    // See this thread: https://stackoverflow.com/questions/4715415/base64-what-is-the-worst-possible-increase-in-space-usage
+
+                    // TODO Modify the database to accept byte array instead of string.
                     var base64String = "data:image/webp;base64," + data.AsStream().ConvertToBase64();
 
-
+                    // Assumes every image is a new image. 
                     var mDvdImage = new DvDimage
                     {
                         DvDimageId = 0,

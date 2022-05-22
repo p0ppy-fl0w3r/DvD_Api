@@ -3,6 +3,7 @@ using System.Reflection;
 
 namespace DvD_Api.Validators
 {
+    // Checks if the value supplied is less than the annotated value. 
     public class LessThanAttribute: ValidationAttribute
     {
         public string OtherProperty { get; set; }

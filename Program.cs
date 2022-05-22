@@ -48,7 +48,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "You api title", Version = "v1" });
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Ropey API", Version = "v1" });
+    // Adding authentication options in swagger. 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
@@ -75,6 +76,8 @@ if (app.Environment.IsDevelopment())
 }
 
 var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+
+// The DbContext will behave like it has a Transient scope within this using statement.
 using (var scope = scopeFactory.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();

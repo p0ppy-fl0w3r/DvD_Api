@@ -12,9 +12,9 @@ namespace DvD_Api.Controllers
     {
         public readonly ApplicationDbContext _db;
 
-        public StudioController(ApplicationDbContext databse)
+        public StudioController(ApplicationDbContext database)
         {
-            _db = databse;
+            _db = database;
         }
 
         [HttpGet]

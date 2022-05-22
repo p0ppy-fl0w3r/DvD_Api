@@ -12,9 +12,9 @@ namespace DvD_Api.Controllers
     {
         public readonly ApplicationDbContext _db;
 
-        public DvdCategoryController(ApplicationDbContext databse)
+        public DvdCategoryController(ApplicationDbContext database)
         {
-            _db = databse;
+            _db = database;
         }
 
         [HttpGet]
